@@ -1,0 +1,28 @@
+# Create new environments for clusters
+FEC<-new.env()
+TCE<-new.env()
+
+exi<-(rnorm(N,runif(1,.1,5),runif(1,1,30)))
+eyi<-exi+(rnorm(N,runif(1,.1,5),runif(1,1,30)))
+
+j<-10
+
+for(k in 1:j)                                
+{
+  ID<-1:N
+  CID<-rep(k,time = N)
+  bxy<-rnorm(1,0,5)
+  ex<-(rnorm(N,runif(1,-5,5),runif(1,1,30)))
+  ey<-(rnorm(N,runif(1,-5,5),runif(1,1,30)))
+  x<-ex+exi
+  y<-bxy*x+ey+eyi
+
+
+  FEC$ID<-c(FEC$ID, ID)
+  FEC$CID<-c(FEC$CID, CID)
+  FEC$x<-c(FEC$x, x)
+  FEC$y<-c(FEC$y, y)
+  TCE$k<-c(TCE$k,k)
+  TCE$bxy<-c(TCE$bxy, bxy)
+
+}
