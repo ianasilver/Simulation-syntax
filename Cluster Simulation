@@ -2,23 +2,26 @@
 FEC<-new.env()
 TCE<-new.env()
 
+# Specify Residual Error Across All Clusters
 exi<-(rnorm(N,runif(1,.1,5),runif(1,1,30)))
+# Specify Covariance in Residual Error Across All Clusters
 eyi<-exi+(rnorm(N,runif(1,.1,5),runif(1,1,30)))
 
 j<-10
 
 for(k in 1:j)                                
 {
-  ID<-1:N
-  CID<-rep(k,time = N)
-  bxy<-rnorm(1,0,5)
-  ex<-(rnorm(N,runif(1,-5,5),runif(1,1,30)))
-  ey<-(rnorm(N,runif(1,-5,5),runif(1,1,30)))
-  x<-ex+exi
-  y<-bxy*x+ey+eyi
+ 
+  ID<-1:N # ID Numbers
+  CID<-rep(k,time = N) # Cluster ID Numbers
+  bxy<-rnorm(1,0,5) # slope coefficient for the Association between X and Y
+  ex<-(rnorm(N,runif(1,-5,5),runif(1,1,30))) # Residual Error on X by cluster
+  ey<-(rnorm(N,runif(1,-5,5),runif(1,1,30))) # Residual Error on Y by Cluster
+  x<-ex+exi # Specifying X
+  y<-bxy*x+ey+eyi # Specifying Y
 
-
-  FEC$ID<-c(FEC$ID, ID)
+# Recoding the data in the environments
+  FEC$ID<-c(FEC$ID, ID) 
   FEC$CID<-c(FEC$CID, CID)
   FEC$x<-c(FEC$x, x)
   FEC$y<-c(FEC$y, y)
@@ -26,3 +29,6 @@ for(k in 1:j)
   TCE$bxy<-c(TCE$bxy, bxy)
 
 }
+# Transforming the Environments to useable dataframes
+    DF_FE<-as.data.frame(as.list(FEC))
+    TCE<-as.data.frame(as.list(TCE))
